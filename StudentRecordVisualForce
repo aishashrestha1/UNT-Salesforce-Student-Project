@@ -1,0 +1,103 @@
+<apex:page standardController="Student__c" extensions="Studentclass" > 
+<style type="text/css">
+<!--	.myButton {
+		color: white;
+		background: Black;
+		border-bottom: 0px;
+		border-right: 0px;
+		width: 60px;
+		height: 22px;
+}-->
+.buttong2y{
+   border-top: 1px solid #90ae6a;
+   background: #3399FF;
+   background: -webkit-gradient(linear, left top, left bottom, from(#91af6a), to(#91af6a));
+   background: -webkit-linear-gradient(top, #91af6a, #91af6a);
+   background: -moz-linear-gradient(top, #91af6a, #91af6a);
+   background: -ms-linear-gradient(top, #91af6a, #91af6a);
+   background: -o-linear-gradient(top, #91af6a, #91af6a);
+   padding: 5px 10px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   text-align:centre;
+   font-size: 14px;
+   font-family: Helvetica, Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+  color:#3399FF;
+
+   }
+</style>    
+    
+    <table style="border: 1px solid black;width:100%;padding: 5px;text-align:center">     
+    	<th>     
+       		 <span style="padding:140px 75px;font-size: 25px;color:Green;"> Enrollment Systems </span>
+		</th>
+   		<th>
+        	<div style="text-align:center;padding:1px 30px 1px 40px;">
+				<apex:image id="theImage" value="{!$Resource.UNT_Logo}" width="200" height="200"/>
+   		 	</div>
+    	</th>
+    	<th>
+            <span style="padding:140px 140px;font-size: 25px; color:Green;"> Salesforce </span>
+    	</th>
+    </table>
+   
+
+   	<apex:pageBlock id="student_schedule">
+        <apex:form >
+   		 <apex:pageBlockSection >
+             <span style="font-size: 15px; font-Weight:bold;"> Student Form </span>
+    	 </apex:pageBlockSection>
+       	  
+            <apex:pageBlockSection >
+             <apex:inputField label="Student Name" value="{!Student__c.Name}"/>
+                <apex:inputField label="Student ID" value="{!Student__c.Student_ID__c}"/>
+             <apex:inputField label="Email" value="{!Student__c.Email__c}"/>
+             <apex:inputField label="Address" value="{!Student__c.Address__c}"/>
+             <apex:inputField label="Phone" value="{!Student__c.Phone__c}"/>
+             <apex:inputField label="Description" value="{!Student__c.Description__c}"/>
+             <apex:inputField label="Adviser" value="{!Student__c.Adviser__c}"/>
+         </apex:pageBlockSection> 
+            <apex:commandButton action="{!Save}" value="Add Course" styleClass="buttong2y" style="height:30px;border-radius:9px;width:160px;background-color::#3399FF;text-align: center;border: 1px solid black; color:#3399FF;" ></apex:commandButton>
+            <apex:pageBlock >
+                 <apex:pageBlockSection >
+                 </apex:pageBlockSection>
+            </apex:pageBlock>
+            <apex:pageBlock >
+            <apex:pageBlockTable value="{!asso}" var="c">
+                <span style="font-size: 10px; font-Weight:bold;">
+                <apex:column headerValue="Course Name"  >
+     		   		<apex:inputField value="{!c.Name}"/>
+                    </apex:column> </span>
+                <apex:column headerValue="Grade" >
+                  	<apex:inputField value="{!c.Grade__c}"/>
+                    </apex:column>
+                 <!--   <apex:column headerValue="Student" >
+        			 <apex:inputField value="{!c.Student__c}" id="RoleStatus" rendered="FALSE"/>
+       				 <script>
+                        document.querySelector('[id$=RoleStatus]').value ='{!Student__c.id}' ;
+        
+        				</script>
+                    </apex:column> -->
+              </apex:pageBlockTable>
+            </apex:pageBlock>
+                 <apex:commandButton action="{!MoreList}" value="Add More Courses" style="padding:10px 20px"/> 
+            <div style ="text-align: center;"  >
+           		<apex:commandButton action="{!Save1}" value="Save"  style="height:30px;border-radius:9px;width:160px;background-color:blue;text-align: center;border: 1px solid black;"></apex:commandButton>
+            	<apex:commandButton action="{!Cancel}" value="Cancel"  style="height:30px;border-radius:9px;width:160px;background-color:Black;text-align: center;border: 1px solid black;"/>
+              </div>    
+         </apex:form>
+    </apex:pageBlock>
+    
+    
+        
+   <!-- <apex:relatedList list="Course__r" title ="Courses" rendered ="true"/> -->
+ 
+</apex:page>
+                                        
