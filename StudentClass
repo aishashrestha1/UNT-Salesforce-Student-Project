@@ -1,0 +1,76 @@
+public with sharing class Studentclass {
+
+private ApexPages.StandardController controller {get; set;}
+    Student__c st;    
+   Course__c c = new Course__c();
+    public String currentRecordId {get;set;}
+    public List<Course__c> role {get;set;}
+    public list<Course__c> asso { get; set; }
+    
+    public Studentclass(ApexPages.StandardController controller) {
+         currentRecordId  = ApexPages.CurrentPage().getparameters().get('id');
+          c.Student__c = currentRecordId;
+         this.controller = controller;
+        this.st = (Student__c)Controller.getRecord();
+        
+         asso = new List<Course__c>();
+         asso.add(c); 
+    }
+    public PageReference Save() {
+  Student__c Stud = new Student__c(Name =st.Name,Email__c =st.Email__c,Phone__c=st.Phone__c,Address__c=st.Address__c,
+                                    Description__c=st.Description__c,Adviser__c=st.Adviser__c,Student_ID__c=st.Student_ID__c             );  
+  insert  Stud;
+  String accID = (String)Stud.Id; 
+        
+  PageReference page = new PageReference('/' +'apex/StudentRecords?core.apexpages.request.devconsole=1&id='+accID);
+  page.setRedirect(true);
+  return page;  
+}
+
+
+ public void Morelist(){
+        Course__c conts = new Course__c();
+        conts.Student__c = currentRecordId;
+        asso.add(conts);
+    }
+      public PageReference Save1(){
+        List<Course__c> revenueSchedulesToUpdate  = new  List<Course__c>();
+        List<Course__c> revenueSchedulesToInsert = new List<Course__c>();
+        Integer average=0;
+        for(Integer i=0; i<asso.size(); i++) {
+           
+            Course__c contss =asso[i];
+            contss.Student__c = currentRecordId;
+            revenueSchedulesToInsert.add(contss);
+            average+=integer.valueOf(contss.Grade__c);
+            system.debug(currentRecordId);
+            System.debug('List of Course:' + i ); }
+          insert  revenueSchedulesToInsert;
+        
+          Integer pass = average/asso.size();
+          
+          String CourseGrade;
+            if (90.00 <= pass) {
+             CourseGrade ='A';
+        } else if (80.00 <= pass && pass < 90.00) {
+            CourseGrade ='B';
+          } else if (70.00 <= pass && pass < 80.00) {
+           CourseGrade ='c';
+             } else if (60.00 <= pass && pass < 70.00) {
+             CourseGrade ='D';
+        } else if (pass < 60) {
+            CourseGrade ='F';
+        }
+
+
+        Student__c parent = new Student__c(id=currentRecordId,Average__c=pass,Overall_Grade__c=CourseGrade);
+        update Parent;
+        PageReference reRendpay = new PageReference('/'+parent.id);
+        reRendpay.setRedirect(true);
+        return reRendpay; 
+        
+    }
+    
+}
+
+//apex/StudentRecords?core.apexpages.request.devconsole=1&id=
